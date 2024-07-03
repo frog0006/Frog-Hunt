@@ -18,6 +18,11 @@ def slowdown():
     global speed
     speed = speed - 0.1
 
+#Freeze player control
+def freeze():
+    global speed
+    speed = 0
+
 #Screen setup
 width = 600
 height = 500
@@ -26,6 +31,15 @@ S.setup(width, height)
 S.bgcolor('green')
 S.title("Frog Hunt")
 
+#Register frog image
+turtle.register_shape('images/frog_img.gif')
+
+#Create the frog turtle
+frog = turtle.Turtle()
+frog.shape('images/frog_img.gif')
+frog.up()
+frog.speed(0)
+frog.setposition(100,100)
 #Draw Boundary
 T = turtle.Turtle()
 T.speed(0)
@@ -54,7 +68,13 @@ turtle.onkey(turnleft, "Left")
 turtle.onkey(turnright, "Right")
 turtle.onkey(speedup, "Up")
 turtle.onkey(slowdown, "Down")
+turtle.onkey(freeze, "f")
 
 
 while True:
     player.forward(speed)
+   #Set boundary
+    if player.xcor() > 200 or player.xcor() <-200:
+        player.setheading(180-player.heading())
+    if player.ycor() > 200 or player.ycor() <-200:
+        player.setheading(360-player.heading())
