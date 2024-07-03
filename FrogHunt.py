@@ -70,7 +70,20 @@ turtle.onkey(speedup, "Up")
 turtle.onkey(slowdown, "Down")
 turtle.onkey(freeze, "f")
 
+#score
+score = 0
 
+#Draw score board
+score_pen = turtle.Turtle()
+score_pen.speed(0)
+score_pen.color('black')
+score_pen.up()
+score_pen.setposition(-200,210)
+score_pen.write(f'Frog Eggs: {score}')
+score_pen.hideturtle()
+
+
+time0 = time.time()
 while True:
     player.forward(speed)
    #Set boundary
@@ -78,3 +91,15 @@ while True:
         player.setheading(180-player.heading())
     if player.ycor() > 200 or player.ycor() <-200:
         player.setheading(360-player.heading())
+
+    if time.time() - time0 > 3:
+        x = random.randint(-180,180)
+        y = random.randint(-180,180)
+        frog.setposition(x,y)
+        time0 = time.time()
+   #collision
+    if abs(player.xcor()-frog.xcor()) < 20 and abs(player.ycor()-frog.ycor()) < 25:
+        x = random.randint(-180,180)
+        y = random.randint(-180,180)
+        frog.setposition(x, y)
+        time0 = time.time()
