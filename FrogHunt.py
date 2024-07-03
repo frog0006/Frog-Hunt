@@ -83,7 +83,7 @@ score_pen.speed(0)
 score_pen.color('black')
 score_pen.up()
 score_pen.setposition(-boundary_width / 2, boundary_height / 2 + 10)
-score_pen.write(f'Frog Eggs: {score}')
+score_pen.write(f'Frog Eggs: {score}', font=("Comic Sans MS", 12))
 score_pen.hideturtle()
 
 time0 = time.time()
@@ -109,4 +109,4 @@ while True:
 
         score = score + 1
         score_pen.clear()
-        score_pen.write(f'Frog Eggs: {score}')
+        score_pen.write(f'Frog Eggs: {score}', font=("Comic Sans MS", 12))
