@@ -12,11 +12,11 @@ def turnright():
 
 def speedup():
     global speed
-    speed = speed + 0.1
+    speed = speed + 0.5
 
 def slowdown():
     global speed
-    speed = speed - 0.1
+    speed = speed - 0.5
 
 #Freeze player control
 def freeze():
@@ -103,3 +103,7 @@ while True:
         y = random.randint(-180,180)
         frog.setposition(x, y)
         time0 = time.time()
+
+        score = score + 1
+        score_pen.clear()
+        score_pen.write(f'Frog Eggs: {score}')
