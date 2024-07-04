@@ -15,7 +15,7 @@ water_sfx.play(loops=-1)
 # Crunch sound effect whenever player collides with frog
 crunch_sfx = pygame.mixer.Sound('audios/crunch_sfx.mp3')
 
-# Croak sound effect for every 3 frog eggs the player gets
+# Play croak sound effect for every 3 frog eggs the player gets
 croak_sfx = pygame.mixer.Sound('audios/croak_sfx.mp3')
 
 # Define functions
@@ -187,8 +187,8 @@ score_pen = turtle.Turtle()
 score_pen.speed(0)
 score_pen.color('black')
 score_pen.up()
-score_pen.setposition(-boundary_width / 2, boundary_height / 2 + 10)
-score_pen.write(f'Frog Eggs: {score}', font=("Comic Sans MS", 12))
+score_pen.setposition(0, boundary_height / 2 + 10)
+score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
 score_pen.hideturtle()
 
 time0 = time.time()
@@ -217,7 +217,7 @@ while True:
 
         score = score + 1
         score_pen.clear()
-        score_pen.write(f'Frog Eggs: {score}', font=("Comic Sans MS", 12))
+        score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
         
         # Play croak sound effect for every 3 frog eggs
         if score % 3 == 0:
