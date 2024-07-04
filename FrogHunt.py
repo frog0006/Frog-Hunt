@@ -27,12 +27,18 @@ width = 700
 height = 500
 S = turtle.Screen()
 S.setup(width, height)
-S.bgcolor('green')
+S.bgcolor('white')
 S.title("Frog Hunt")
 
-# Register and set background image
+# Register and set background images
 S.register_shape('images/pond.gif')
 S.bgpic('images/pond.gif')
+S.register_shape('images/rocks.gif')
+rocks = turtle.Turtle()
+rocks.shape('images/rocks.gif')
+rocks.up()
+rocks.speed(0)
+rocks.setposition(230,150)
 
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
@@ -45,20 +51,71 @@ frog.speed(0)
 frog.setposition(100,100)
 
 # Draw Boundary
-boundary_width = 600  # New boundary width
-boundary_height = 400  # Keep original height
-T = turtle.Turtle()
-T.speed(0)
-T.up()
-T.setposition(-boundary_width / 2, -boundary_height / 2)
-T.down()
-T.pensize(3)
-for side in range(2):
-    T.forward(boundary_width)
-    T.left(90)
-    T.forward(boundary_height)
-    T.left(90)
-T.hideturtle()
+boundary_width = 600
+boundary_height = 400
+boundary_color = 'green'
+
+# Function to draw the boundary and hide overlapping parts
+def draw_boundary():
+    T = turtle.Turtle()
+    T.speed(0)
+    T.up()
+    T.hideturtle()
+    
+    # Draw boundary
+    T.color('black')
+    T.pensize(3)
+    T.setposition(-boundary_width / 2, -boundary_height / 2)
+    T.down()
+    for side in range(2):
+        T.forward(boundary_width)
+        T.left(90)
+        T.forward(boundary_height)
+        T.left(90)
+    T.up()
+    
+    # Draw filled rectangles to hide overlapping parts of pond
+    T.color(boundary_color)
+    T.begin_fill()
+    T.setposition(-width / 2, -height / 2)
+    T.down()
+    T.goto(-width / 2, height / 2)
+    T.goto(-boundary_width / 2, height / 2)
+    T.goto(-boundary_width / 2, -height / 2)
+    T.goto(-width / 2, -height / 2)
+    T.end_fill()
+    T.up()
+
+    T.begin_fill()
+    T.setposition(boundary_width / 2, -height / 2)
+    T.down()
+    T.goto(boundary_width / 2, height / 2)
+    T.goto(width / 2, height / 2)
+    T.goto(width / 2, -height / 2)
+    T.goto(boundary_width / 2, -height / 2)
+    T.end_fill()
+    T.up()
+
+    T.begin_fill()
+    T.setposition(-width / 2, boundary_height / 2)
+    T.down()
+    T.goto(width / 2, boundary_height / 2)
+    T.goto(width / 2, height / 2)
+    T.goto(-width / 2, height / 2)
+    T.goto(-width / 2, boundary_height / 2)
+    T.end_fill()
+    T.up()
+
+    T.begin_fill()
+    T.setposition(-width / 2, -boundary_height / 2)
+    T.down()
+    T.goto(width / 2, -boundary_height / 2)
+    T.goto(width / 2, -height / 2)
+    T.goto(-width / 2, -height / 2)
+    T.goto(-width / 2, -boundary_height / 2)
+    T.end_fill()
+
+draw_boundary()
 
 # Player setup
 player = turtle.Turtle()
