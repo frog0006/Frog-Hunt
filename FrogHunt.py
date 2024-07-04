@@ -34,11 +34,6 @@ S.title("Frog Hunt")
 S.register_shape('images/pond.gif')
 S.bgpic('images/pond.gif')
 S.register_shape('images/rocks.gif')
-rocks = turtle.Turtle()
-rocks.shape('images/rocks.gif')
-rocks.up()
-rocks.speed(0)
-rocks.setposition(230, 150)
 
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
@@ -53,8 +48,9 @@ frog.setposition(100, 100)
 # Draw Boundary
 boundary_width = 600
 boundary_height = 400
+boundary_color = 'green'
 
-# Function to draw the boundary lines
+# Function to draw the boundary lines and green rectangles outside the boundary
 def draw_boundary():
     T = turtle.Turtle()
     T.speed(0)
@@ -71,8 +67,66 @@ def draw_boundary():
         T.left(90)
         T.forward(boundary_height)
         T.left(90)
+    T.up()
+
+    # Draw filled rectangles to hide overlapping parts of pond
+    T.color(boundary_color)
+    T.begin_fill()
+    T.setposition(-width / 2, -height / 2)
+    T.down()
+    T.goto(-width / 2, height / 2)
+    T.goto(-boundary_width / 2, height / 2)
+    T.goto(-boundary_width / 2, -height / 2)
+    T.goto(-width / 2, -height / 2)
+    T.end_fill()
+    T.up()
+
+    T.begin_fill()
+    T.setposition(boundary_width / 2, -height / 2)
+    T.down()
+    T.goto(boundary_width / 2, height / 2)
+    T.goto(width / 2, height / 2)
+    T.goto(width / 2, -height / 2)
+    T.goto(boundary_width / 2, -height / 2)
+    T.end_fill()
+    T.up()
+
+    T.begin_fill()
+    T.setposition(-width / 2, boundary_height / 2)
+    T.down()
+    T.goto(width / 2, boundary_height / 2)
+    T.goto(width / 2, height / 2)
+    T.goto(-width / 2, height / 2)
+    T.goto(-width / 2, boundary_height / 2)
+    T.end_fill()
+    T.up()
+
+    T.begin_fill()
+    T.setposition(-width / 2, -boundary_height / 2)
+    T.down()
+    T.goto(width / 2, -boundary_height / 2)
+    T.goto(width / 2, -height / 2)
+    T.goto(-width / 2, -height / 2)
+    T.goto(-width / 2, -boundary_height / 2)
+    T.end_fill()
 
 draw_boundary()
+
+# Add rocks to each corner
+def add_rocks():
+    positions = [(-width / 2 + 100, -height / 2 + 80), #Bottom left corner rock
+                 (width / 2 - 90, -height / 2 + 80), #Bottom right corner rock
+                 (-width / 2 + 100, height / 2 -80), #Top left corner rock
+                 (width / 2 - 110, height / 2 - 90)] #Top right corner rock
+    
+    for pos in positions:
+        rock = turtle.Turtle()
+        rock.shape('images/rocks.gif')
+        rock.up()
+        rock.speed(0)
+        rock.setposition(pos)
+
+add_rocks()
 
 # Player setup
 player = turtle.Turtle()
