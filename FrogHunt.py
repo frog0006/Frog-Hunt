@@ -15,6 +15,9 @@ water_sfx.play(loops=-1)
 # Crunch sound effect whenever player collides with frog
 crunch_sfx = pygame.mixer.Sound('audios/crunch_sfx.mp3')
 
+# Croak sound effect for every 3 frog eggs the player gets
+croak_sfx = pygame.mixer.Sound('audios/croak_sfx.mp3')
+
 # Define functions
 def turnleft():
     player.left(30)
@@ -215,3 +218,7 @@ while True:
         score = score + 1
         score_pen.clear()
         score_pen.write(f'Frog Eggs: {score}', font=("Comic Sans MS", 12))
+        
+        # Play croak sound effect for every 3 frog eggs
+        if score % 3 == 0:
+            croak_sfx.play()
