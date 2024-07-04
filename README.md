@@ -5,3 +5,4 @@ Controls:
 ⬇️ - Decrease player speed
 ⬅️ - Turn the player left
 ➡️ - Turn the player right
+F - Freeze the player
