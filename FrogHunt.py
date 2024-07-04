@@ -50,6 +50,22 @@ boundary_width = 600
 boundary_height = 400
 boundary_color = 'green'
 
+# Add rocks to each corner
+def add_rocks():
+    positions = [(-width / 2 + 100, -height / 2 + 80), # Bottom left corner rock
+                 (width / 2 - 80, -height / 2 + 80),  # Bottom right corner rock
+                 (-width / 2 + 80, height / 2 - 80), # Top left corner rock
+                 (width / 2 - 100, height / 2 - 80)]  # Top right corner rock
+    
+    for pos in positions:
+        rock = turtle.Turtle()
+        rock.shape('images/rocks.gif')
+        rock.up()
+        rock.speed(0)
+        rock.setposition(pos)
+
+add_rocks()
+
 # Function to draw the boundary lines and green rectangles outside the boundary
 def draw_boundary():
     T = turtle.Turtle()
@@ -111,22 +127,6 @@ def draw_boundary():
     T.end_fill()
 
 draw_boundary()
-
-# Add rocks to each corner
-def add_rocks():
-    positions = [(-width / 2 + 100, -height / 2 + 80), #Bottom left corner rock
-                 (width / 2 - 90, -height / 2 + 80), #Bottom right corner rock
-                 (-width / 2 + 100, height / 2 -80), #Top left corner rock
-                 (width / 2 - 110, height / 2 - 90)] #Top right corner rock
-    
-    for pos in positions:
-        rock = turtle.Turtle()
-        rock.shape('images/rocks.gif')
-        rock.up()
-        rock.speed(0)
-        rock.setposition(pos)
-
-add_rocks()
 
 # Player setup
 player = turtle.Turtle()
