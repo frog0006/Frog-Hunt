@@ -52,10 +52,10 @@ boundary_color = 'green'
 
 # Add rocks to each corner
 def add_rocks():
-    positions = [(-width / 2 + 100, -height / 2 + 80), # Bottom left corner rock
+    positions = [(-width / 2 + 80, -height / 2 + 80), # Bottom left corner rock
                  (width / 2 - 80, -height / 2 + 80),  # Bottom right corner rock
                  (-width / 2 + 80, height / 2 - 80), # Top left corner rock
-                 (width / 2 - 100, height / 2 - 80)]  # Top right corner rock
+                 (width / 2 - 80, height / 2 - 80)]  # Top right corner rock
     
     for pos in positions:
         rock = turtle.Turtle()
