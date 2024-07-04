@@ -38,7 +38,7 @@ rocks = turtle.Turtle()
 rocks.shape('images/rocks.gif')
 rocks.up()
 rocks.speed(0)
-rocks.setposition(230,150)
+rocks.setposition(230, 150)
 
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
@@ -48,21 +48,20 @@ frog = turtle.Turtle()
 frog.shape('images/frog_img.gif')
 frog.up()
 frog.speed(0)
-frog.setposition(100,100)
+frog.setposition(100, 100)
 
 # Draw Boundary
 boundary_width = 600
 boundary_height = 400
-boundary_color = 'green'
 
-# Function to draw the boundary and hide overlapping parts
+# Function to draw the boundary lines
 def draw_boundary():
     T = turtle.Turtle()
     T.speed(0)
     T.up()
     T.hideturtle()
-    
-    # Draw boundary
+
+    # Draw boundary lines
     T.color('black')
     T.pensize(3)
     T.setposition(-boundary_width / 2, -boundary_height / 2)
@@ -72,48 +71,6 @@ def draw_boundary():
         T.left(90)
         T.forward(boundary_height)
         T.left(90)
-    T.up()
-    
-    # Draw filled rectangles to hide overlapping parts of pond
-    T.color(boundary_color)
-    T.begin_fill()
-    T.setposition(-width / 2, -height / 2)
-    T.down()
-    T.goto(-width / 2, height / 2)
-    T.goto(-boundary_width / 2, height / 2)
-    T.goto(-boundary_width / 2, -height / 2)
-    T.goto(-width / 2, -height / 2)
-    T.end_fill()
-    T.up()
-
-    T.begin_fill()
-    T.setposition(boundary_width / 2, -height / 2)
-    T.down()
-    T.goto(boundary_width / 2, height / 2)
-    T.goto(width / 2, height / 2)
-    T.goto(width / 2, -height / 2)
-    T.goto(boundary_width / 2, -height / 2)
-    T.end_fill()
-    T.up()
-
-    T.begin_fill()
-    T.setposition(-width / 2, boundary_height / 2)
-    T.down()
-    T.goto(width / 2, boundary_height / 2)
-    T.goto(width / 2, height / 2)
-    T.goto(-width / 2, height / 2)
-    T.goto(-width / 2, boundary_height / 2)
-    T.end_fill()
-    T.up()
-
-    T.begin_fill()
-    T.setposition(-width / 2, -boundary_height / 2)
-    T.down()
-    T.goto(width / 2, -boundary_height / 2)
-    T.goto(width / 2, -height / 2)
-    T.goto(-width / 2, -height / 2)
-    T.goto(-width / 2, -boundary_height / 2)
-    T.end_fill()
 
 draw_boundary()
 
