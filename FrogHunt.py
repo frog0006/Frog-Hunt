@@ -34,6 +34,7 @@ S.title("Frog Hunt")
 S.register_shape('images/pond.gif')
 S.bgpic('images/pond.gif')
 S.register_shape('images/rocks.gif')
+S.register_shape('images/flower.gif')
 
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
@@ -65,6 +66,22 @@ def add_rocks():
         rock.setposition(pos)
 
 add_rocks()
+
+# Add flowers to each side of the boundary
+def add_flowers():
+    positions = [(0, boundary_height / 2),      # Top side
+                 (0, -boundary_height / 2),     # Bottom side
+                 (-boundary_width / 2, 0),      # Left side
+                 (boundary_width / 2, 0)]       # Right side
+    
+    for pos in positions:
+        flower = turtle.Turtle()
+        flower.shape('images/flower.gif')
+        flower.up()
+        flower.speed(0)
+        flower.setposition(pos)
+
+add_flowers()
 
 # Function to draw the boundary lines and green rectangles outside the boundary
 def draw_boundary():
