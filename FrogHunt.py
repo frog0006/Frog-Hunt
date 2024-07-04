@@ -30,6 +30,10 @@ S.setup(width, height)
 S.bgcolor('green')
 S.title("Frog Hunt")
 
+# Register and set background image
+S.register_shape('images/pond.gif')
+S.bgpic('images/pond.gif')
+
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
 
