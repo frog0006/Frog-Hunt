@@ -130,7 +130,7 @@ add_rocks()
 
 # Player setup
 player = turtle.Turtle()
-player.color('darkblue')
+player.color('lightblue')
 player.shape('triangle')
 player.shapesize(stretch_wid=1, stretch_len=1.8)
 player.up()
