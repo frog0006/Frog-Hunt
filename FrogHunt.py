@@ -3,16 +3,17 @@ import random
 import time
 import pygame
 
-# Initialize pygame mixer for sound
+# Initialize pygame mixer for audios
 pygame.mixer.init()
 
-# Load the sound files
+# Loop play background sounds
 nature_sfx = pygame.mixer.Sound('audios/nature_sfx.mp3')
 water_sfx = pygame.mixer.Sound('audios/water_sfx.mp3')
-
-# Play the sound files in a loop
 nature_sfx.play(loops=-1)
 water_sfx.play(loops=-1)
+
+# Crunch sound effect whenever player collides with frog
+crunch_sfx = pygame.mixer.Sound('audios/crunch_sfx.mp3')
 
 # Define functions
 def turnleft():
@@ -207,6 +208,9 @@ while True:
         y = random.randint(int(-boundary_height / 2) + 20, int(boundary_height / 2) - 20)
         frog.setposition(x, y)
         time0 = time.time()
+
+        # Play crunch sound effect
+        crunch_sfx.play()
 
         score = score + 1
         score_pen.clear()
