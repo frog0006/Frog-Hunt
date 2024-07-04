@@ -51,6 +51,7 @@ S.register_shape('images/pond.gif')
 S.bgpic('images/pond.gif')
 S.register_shape('images/rocks.gif')
 S.register_shape('images/flower.gif')
+S.register_shape('images/frogegg_img.gif')
 
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
@@ -190,6 +191,11 @@ score_pen.up()
 score_pen.setposition(0, boundary_height / 2 + 10)
 score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
 score_pen.hideturtle()
+frogegg = turtle.Turtle()
+frogegg.shape('images/frogegg_img.gif')
+frogegg.up()
+frogegg.speed(0)
+frogegg.setposition(70, boundary_height / 2 + 20)
 
 time0 = time.time()
 while True:
