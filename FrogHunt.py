@@ -20,10 +20,20 @@ croak_sfx = pygame.mixer.Sound('audios/croak_sfx.mp3')
 
 # Define functions
 def turnleft():
-    player.left(30)
+    global turning_left
+    turning_left = True
+
+def stop_turnleft():
+    global turning_left
+    turning_left = False
 
 def turnright():
-    player.right(30)
+    global turning_right
+    turning_right = True
+
+def stop_turnright():
+    global turning_right
+    turning_right = False
 
 def speedup():
     global speed
@@ -172,10 +182,16 @@ player.up()
 # Set speed
 speed = 1
 
+# Initialize turning states
+turning_left = False
+turning_right = False
+
 # Set Player movement controls
 turtle.listen()
-turtle.onkey(turnleft, "Left")
-turtle.onkey(turnright, "Right")
+turtle.onkeypress(turnleft, "Left")
+turtle.onkeyrelease(stop_turnleft, "Left")
+turtle.onkeypress(turnright, "Right")
+turtle.onkeyrelease(stop_turnright, "Right")
 turtle.onkey(speedup, "Up")
 turtle.onkey(slowdown, "Down")
 turtle.onkey(freeze, "f")
@@ -200,6 +216,13 @@ frogegg.setposition(70, boundary_height / 2 + 20)
 time0 = time.time()
 while True:
     player.forward(speed)
+    
+    # Handle turning
+    if turning_left:
+        player.left(5)
+    if turning_right:
+        player.right(5)
+
     # Set boundary
     if player.xcor() > boundary_width / 2 or player.xcor() < -boundary_width / 2:
         player.setheading(180 - player.heading())
@@ -211,6 +234,7 @@ while True:
         y = random.randint(int(-boundary_height / 2) + 20, int(boundary_height / 2) - 20)
         frog.setposition(x, y)
         time0 = time.time()
+    
     # Collision
     if abs(player.xcor() - frog.xcor()) < 20 and abs(player.ycor() - frog.ycor()) < 25:
         x = random.randint(int(-boundary_width / 2) + 20, int(boundary_width / 2) - 20)
