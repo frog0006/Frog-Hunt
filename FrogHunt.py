@@ -180,6 +180,19 @@ player.shape('triangle')
 player.shapesize(stretch_wid=1, stretch_len=1.8)
 player.up()
 
+def draw_eyes(t):
+    eye_size = 3
+    eye_offset_x = 10
+    eye_offset_y = 8
+
+    # Draw the left eye
+    t.goto(player.xcor() + eye_offset_x, player.ycor() + eye_offset_y)
+    t.dot(eye_size, "black")
+
+    # Draw the right eye
+    t.goto(player.xcor() + eye_offset_x, player.ycor() - eye_offset_y)
+    t.dot(eye_size, "black")
+
 # Set speed
 speed = 1
 
