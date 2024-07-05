@@ -2,6 +2,7 @@ import turtle
 import random
 import time
 import pygame
+import math
 
 # Initialize pygame mixer for audios
 pygame.mixer.init()
@@ -225,9 +226,17 @@ while True:
         player.right(5)
 
     # Set boundary
-    if player.xcor() > boundary_width / 2 or player.xcor() < -boundary_width / 2:
+    if player.xcor() > boundary_width / 2:
+        player.setx(boundary_width / 2)
         player.setheading(180 - player.heading())
-    if player.ycor() > boundary_height / 2 or player.ycor() < -boundary_height / 2:
+    if player.xcor() < -boundary_width / 2:
+        player.setx(-boundary_width / 2)
+        player.setheading(180 - player.heading())
+    if player.ycor() > boundary_height / 2:
+        player.sety(boundary_height / 2)
+        player.setheading(360 - player.heading())
+    if player.ycor() < -boundary_height / 2:
+        player.sety(-boundary_height / 2)
         player.setheading(360 - player.heading())
 
     if time.time() - time0 > 3:
@@ -235,21 +244,17 @@ while True:
         y = random.randint(int(-boundary_height / 2) + 20, int(boundary_height / 2) - 20)
         frog.setposition(x, y)
         time0 = time.time()
-    
+
     # Collision
     if abs(player.xcor() - frog.xcor()) < 20 and abs(player.ycor() - frog.ycor()) < 25:
         x = random.randint(int(-boundary_width / 2) + 20, int(boundary_width / 2) - 20)
         y = random.randint(int(-boundary_height / 2) + 20, int(boundary_height / 2) - 20)
         frog.setposition(x, y)
-        time0 = time.time()
-
-        # Play crunch sound effect
         crunch_sfx.play()
-
-        score = score + 1
+        score += 1
         score_pen.clear()
         score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
         
-        # Play croak sound effect for every 3 frog eggs
+        # Play croak sound effect for every 3 frog eggs the player gets
         if score % 3 == 0:
             croak_sfx.play()
