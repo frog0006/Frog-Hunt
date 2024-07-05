@@ -41,7 +41,8 @@ def speedup():
 
 def slowdown():
     global speed
-    speed = speed - 0.5
+    if speed > 0.5:
+        speed = speed - 0.5
 
 # Freeze player control
 def freeze():
