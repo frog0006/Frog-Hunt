@@ -180,19 +180,6 @@ player.shape('triangle')
 player.shapesize(stretch_wid=1, stretch_len=1.8)
 player.up()
 
-# Eyes setup
-left_eye = turtle.Turtle()
-left_eye.shape('circle')
-left_eye.color('black')
-left_eye.shapesize(0.3)
-left_eye.up()
-
-right_eye = turtle.Turtle()
-right_eye.shape('circle')
-right_eye.color('black')
-right_eye.shapesize(0.3)
-right_eye.up()
-
 # Set speed
 speed = 1
 
@@ -236,12 +223,6 @@ while True:
         player.left(5)
     if turning_right:
         player.right(5)
-
-    # Update eyes position
-    eye_offset_x = 10
-    eye_offset_y = 8
-    left_eye.goto(player.xcor() + eye_offset_x, player.ycor() + eye_offset_y)
-    right_eye.goto(player.xcor() + eye_offset_x, player.ycor() - eye_offset_y)
 
     # Set boundary
     if player.xcor() > boundary_width / 2 or player.xcor() < -boundary_width / 2:
