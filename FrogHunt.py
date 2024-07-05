@@ -19,6 +19,17 @@ crunch_sfx = pygame.mixer.Sound('audios/crunch_sfx.mp3')
 # Play croak sound effect for every 3 frog eggs the player gets
 croak_sfx = pygame.mixer.Sound('audios/croak_sfx.mp3')
 
+# Load boing sound effects into a list
+boing_sfx_list = [
+    pygame.mixer.Sound('audios/boing1_sfx.mp3'),
+    pygame.mixer.Sound('audios/boing2_sfx.mp3'),
+    pygame.mixer.Sound('audios/boing3_sfx.mp3'),
+    pygame.mixer.Sound('audios/boing4_sfx.mp3'),
+    pygame.mixer.Sound('audios/boing5_sfx.mp3'),
+    pygame.mixer.Sound('audios/boing6_sfx.mp3'),
+    pygame.mixer.Sound('audios/boing7_sfx.mp3')
+]
+
 # Define functions
 def turnleft():
     global turning_left
@@ -229,15 +240,22 @@ while True:
     if player.xcor() > boundary_width / 2:
         player.setx(boundary_width / 2)
         player.setheading(180 - player.heading())
+        random.choice(boing_sfx_list).play()  # Play a random boing sound effect
+
     if player.xcor() < -boundary_width / 2:
         player.setx(-boundary_width / 2)
         player.setheading(180 - player.heading())
+        random.choice(boing_sfx_list).play()  # Play a random boing sound effect
+
     if player.ycor() > boundary_height / 2:
         player.sety(boundary_height / 2)
         player.setheading(360 - player.heading())
+        random.choice(boing_sfx_list).play()  # Play a random boing sound effect
+
     if player.ycor() < -boundary_height / 2:
         player.sety(-boundary_height / 2)
         player.setheading(360 - player.heading())
+        random.choice(boing_sfx_list).play()  # Play a random boing sound effect
 
     if time.time() - time0 > 3:
         x = random.randint(int(-boundary_width / 2) + 20, int(boundary_width / 2) - 20)
