@@ -49,12 +49,12 @@ def stop_turnright():
 
 def speedup():
     global speed
-    speed = speed + 0.5
+    speed += 0.5
 
 def slowdown():
     global speed
     if speed > 0.5:
-        speed = speed - 0.5
+        speed -= 0.5
 
 # Freeze player control
 def freeze():
@@ -68,6 +68,7 @@ S = turtle.Screen()
 S.setup(width, height)
 S.bgcolor('white')
 S.title("Frog Hunt")
+S.tracer(0)  # Turn off automatic screen updates for smoother animation
 
 # Register and set background images
 S.register_shape('images/pond.gif')
@@ -199,6 +200,10 @@ speed = 1
 turning_left = False
 turning_right = False
 
+# Initialize global time variable
+global time0
+time0 = time.time()
+
 # Set Player movement controls
 turtle.listen()
 turtle.onkeypress(turnleft, "Left")
@@ -220,22 +225,33 @@ score_pen.up()
 score_pen.setposition(0, boundary_height / 2 + 10)
 score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
 score_pen.hideturtle()
+
 frogegg = turtle.Turtle()
 frogegg.shape('images/frogegg_img.gif')
 frogegg.up()
 frogegg.speed(0)
 frogegg.setposition(70, boundary_height / 2 + 20)
 
-time0 = time.time()
-while True:
-    player.forward(speed)
+# Helper function to move player
+def move_player():
+    angle_rad = math.radians(player.heading())
+    dx = speed * math.cos(angle_rad)
+    dy = speed * math.sin(angle_rad)
+    player.setx(player.xcor() + dx)
+    player.sety(player.ycor() + dy)
+
+# Main game loop
+def game_loop():
+    global time0  # Declare time0 as global to modify it within the function
+
+    move_player()
     
     # Handle turning
     if turning_left:
         player.left(5)
     if turning_right:
         player.right(5)
-
+    
     # Set boundary
     if player.xcor() > boundary_width / 2:
         player.setx(boundary_width / 2)
@@ -269,6 +285,7 @@ while True:
         y = random.randint(int(-boundary_height / 2) + 20, int(boundary_height / 2) - 20)
         frog.setposition(x, y)
         crunch_sfx.play()
+        global score
         score += 1
         score_pen.clear()
         score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
@@ -276,3 +293,10 @@ while True:
         # Play croak sound effect for every 3 frog eggs the player gets
         if score % 3 == 0:
             croak_sfx.play()
+
+    S.update()
+    S.ontimer(game_loop, 20)  # Call game_loop every 20 ms for smooth updates
+
+# Initialize and start the game loop
+game_loop()
+turtle.done()
