@@ -49,12 +49,12 @@ def stop_turnright():
 
 def speedup():
     global speed
-    speed += 0.5
+    speed = speed + 0.5
 
 def slowdown():
     global speed
     if speed > 0.5:
-        speed -= 0.5
+        speed = speed - 0.5
 
 # Freeze player control
 def freeze():
@@ -220,7 +220,6 @@ score_pen.up()
 score_pen.setposition(0, boundary_height / 2 + 10)
 score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
 score_pen.hideturtle()
-
 frogegg = turtle.Turtle()
 frogegg.shape('images/frogegg_img.gif')
 frogegg.up()
@@ -229,19 +228,14 @@ frogegg.setposition(70, boundary_height / 2 + 20)
 
 time0 = time.time()
 while True:
-    # Calculate the next position based on speed and heading
-    if not (turning_left or turning_right):
-        player.forward(speed)
-    else:
-        # Apply turning effect with constant speed
-        if turning_left:
-            player.left(5)
-        if turning_right:
-            player.right(5)
-        
-        # Maintain speed during turns
-        player.forward(speed)
+    player.forward(speed)
     
+    # Handle turning
+    if turning_left:
+        player.left(5)
+    if turning_right:
+        player.right(5)
+
     # Set boundary
     if player.xcor() > boundary_width / 2:
         player.setx(boundary_width / 2)
