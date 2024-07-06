@@ -63,9 +63,10 @@ def freeze():
 
 # Function to change the background image
 def change_background(image, interval):
-    global frog_relocation_interval
+    global frog_relocation_interval, time0
     S.bgpic(image)
     frog_relocation_interval = interval
+    time0 = time.time()  # Reset the timer when changing background
 
 # Screen setup
 width = 700
