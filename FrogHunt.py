@@ -61,6 +61,10 @@ def freeze():
     global speed
     speed = 0
 
+# Function to change the background image
+def change_background(image):
+    S.bgpic(image)
+
 # Screen setup
 width = 700
 height = 500
@@ -72,10 +76,11 @@ S.tracer(0)  # Turn off automatic screen updates for smoother animation
 
 # Register and set background images
 S.register_shape('images/pond.gif')
-S.bgpic('images/pond.gif')
 S.register_shape('images/rocks.gif')
 S.register_shape('images/flower.gif')
 S.register_shape('images/frogegg_img.gif')
+S.register_shape('images/pond2.gif')
+S.register_shape('images/pond3.gif')
 
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
@@ -213,6 +218,9 @@ turtle.onkeyrelease(stop_turnright, "Right")
 turtle.onkey(speedup, "Up")
 turtle.onkey(slowdown, "Down")
 turtle.onkey(freeze, "f")
+turtle.onkey(lambda: change_background('images/pond.gif'), "1")
+turtle.onkey(lambda: change_background('images/pond2.gif'), "2")
+turtle.onkey(lambda: change_background('images/pond3.gif'), "3")
 
 # Score
 score = 0
