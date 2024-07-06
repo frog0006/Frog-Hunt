@@ -62,8 +62,10 @@ def freeze():
     speed = 0
 
 # Function to change the background image
-def change_background(image):
+def change_background(image, interval):
+    global frog_relocation_interval
     S.bgpic(image)
+    frog_relocation_interval = interval
 
 # Screen setup
 width = 700
@@ -80,10 +82,11 @@ S.register_shape('images/rocks.gif')
 S.register_shape('images/flower.gif')
 S.register_shape('images/frogegg_img.gif')
 S.register_shape('images/pond2.gif')
-S.register_shape('images/pond3.gif')
+S.register_shape('images/pond3_resized.gif')
 
-# Set the initial background image
-change_background('images/pond.gif')
+# Set the initial background image and frog relocation interval
+frog_relocation_interval = 5  # Initial interval for pond.gif
+change_background('images/pond.gif', 5)
 
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
@@ -221,9 +224,9 @@ turtle.onkeyrelease(stop_turnright, "Right")
 turtle.onkey(speedup, "Up")
 turtle.onkey(slowdown, "Down")
 turtle.onkey(freeze, "f")
-turtle.onkey(lambda: change_background('images/pond.gif'), "1")
-turtle.onkey(lambda: change_background('images/pond2.gif'), "2")
-turtle.onkey(lambda: change_background('images/pond3.gif'), "3")
+turtle.onkey(lambda: change_background('images/pond.gif', 5), "1")
+turtle.onkey(lambda: change_background('images/pond2.gif', 3), "2")
+turtle.onkey(lambda: change_background('images/pond3_resized.gif', 1), "3")
 
 # Score
 score = 0
@@ -284,7 +287,7 @@ def game_loop():
         player.setheading(360 - player.heading())
         random.choice(boing_sfx_list).play()  # Play a random boing sound effect
 
-    if time.time() - time0 > 3:
+    if time.time() - time0 > frog_relocation_interval:
         x = random.randint(int(-boundary_width / 2) + 20, int(boundary_width / 2) - 20)
         y = random.randint(int(-boundary_height / 2) + 20, int(boundary_height / 2) - 20)
         frog.setposition(x, y)
