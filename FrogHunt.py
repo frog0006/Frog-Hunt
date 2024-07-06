@@ -217,7 +217,10 @@ player.shape('triangle')
 player.shapesize(stretch_wid=1, stretch_len=1.8)
 player.up()
 
-# Set speed
+# Initialize frog relocation interval with a default value
+frog_relocation_interval = 1.5  # Default medium pace
+
+# Initialize speed
 speed = 1
 
 # Initialize turning states
@@ -330,5 +333,6 @@ def game_loop():
     S.ontimer(game_loop, 20)  # Call game_loop every 20 ms for smooth updates
 
 # Initialize and start the game loop
+change_background('images/pond.gif')  # Set initial background
 game_loop()
 turtle.done()
