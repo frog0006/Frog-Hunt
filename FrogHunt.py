@@ -56,17 +56,30 @@ def slowdown():
     if speed > 0.5:
         speed -= 0.5
 
-# Freeze player control
 def freeze():
     global speed
     speed = 0
 
-# Function to change the background image
-def change_background(image, interval):
-    global frog_relocation_interval, time0
-    S.bgpic(image)
-    frog_relocation_interval = interval
-    time0 = time.time()  # Reset the timer when changing background
+def change_background(bg_image):
+    S.bgpic(bg_image)
+    global frog_relocation_interval
+    if bg_image == 'images/pond.gif':
+        frog_relocation_interval = 3  # Slow relocation
+    elif bg_image == 'images/pond2.gif':
+        frog_relocation_interval = 1.5  # Medium relocation
+    elif bg_image == 'images/pond3.gif':
+        frog_relocation_interval = 0.5  # Fast relocation
+    global time0
+    time0 = time.time()  # Reset timer when background changes
+
+def switch_to_pond1():
+    change_background('images/pond.gif')
+
+def switch_to_pond2():
+    change_background('images/pond2.gif')
+
+def switch_to_pond3():
+    change_background('images/pond3.gif')
 
 # Screen setup
 width = 700
@@ -79,15 +92,14 @@ S.tracer(0)  # Turn off automatic screen updates for smoother animation
 
 # Register and set background images
 S.register_shape('images/pond.gif')
+S.register_shape('images/pond2.gif')
+S.register_shape('images/pond3.gif')
 S.register_shape('images/rocks.gif')
 S.register_shape('images/flower.gif')
 S.register_shape('images/frogegg_img.gif')
-S.register_shape('images/pond2.gif')
-S.register_shape('images/pond3_resized.gif')
 
-# Set the initial background image and frog relocation interval
-frog_relocation_interval = 5  # Initial interval for pond.gif
-change_background('images/pond.gif', 5)
+# Set initial background
+change_background('images/pond.gif')
 
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
@@ -225,9 +237,11 @@ turtle.onkeyrelease(stop_turnright, "Right")
 turtle.onkey(speedup, "Up")
 turtle.onkey(slowdown, "Down")
 turtle.onkey(freeze, "f")
-turtle.onkey(lambda: change_background('images/pond.gif', 5), "1")
-turtle.onkey(lambda: change_background('images/pond2.gif', 3), "2")
-turtle.onkey(lambda: change_background('images/pond3_resized.gif', 1), "3")
+
+# Set background change controls
+turtle.onkeypress(switch_to_pond1, "1")
+turtle.onkeypress(switch_to_pond2, "2")
+turtle.onkeypress(switch_to_pond3, "3")
 
 # Score
 score = 0
@@ -304,6 +318,9 @@ def game_loop():
         score += 1
         score_pen.clear()
         score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
+        
+        # Reset timer after catching the frog
+        time0 = time.time()
         
         # Play croak sound effect for every 3 frog eggs the player gets
         if score % 3 == 0:
