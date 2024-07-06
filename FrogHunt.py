@@ -65,10 +65,13 @@ def change_background(bg_image):
     global frog_relocation_interval
     if bg_image == 'images/pond.gif':
         frog_relocation_interval = 3  # Slow relocation
+        player.color('lightgreen')  # Change player color to light green
     elif bg_image == 'images/pond2.gif':
         frog_relocation_interval = 1.5  # Medium relocation
+        player.color('lightblue')  # Change player color to light blue (current color)
     elif bg_image == 'images/pond3.gif':
         frog_relocation_interval = 0.5  # Fast relocation
+        player.color('lightcoral')  # Change player color to light red
     global time0
     time0 = time.time()  # Reset timer when background changes
 
@@ -212,7 +215,7 @@ draw_boundary()
 
 # Player setup
 player = turtle.Turtle()
-player.color('lightblue')
+player.color('lightblue')  # Default color
 player.shape('triangle')
 player.shapesize(stretch_wid=1, stretch_len=1.8)
 player.up()
