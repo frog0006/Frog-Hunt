@@ -82,6 +82,9 @@ S.register_shape('images/frogegg_img.gif')
 S.register_shape('images/pond2.gif')
 S.register_shape('images/pond3.gif')
 
+# Set the initial background image
+change_background('images/pond.gif')
+
 # Register frog image
 turtle.register_shape('images/frog_img.gif')
 
