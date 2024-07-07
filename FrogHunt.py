@@ -325,6 +325,7 @@ def start_challenge():
     challenge_mode = True
     challenge_start_time = time.time()
     disable_difficulty_keys()
+    change_background('images/pond.gif')  # Start with easy difficulty
 
 # Function to update and display the challenge timer
 def update_timer():
@@ -393,6 +394,14 @@ def game_loop():
         # Play croak sound effect for every 3 frog eggs the player gets
         if score % 3 == 0:
             croak_sfx.play()
+
+        if challenge_mode:
+            if score == 20:
+                switch_to_pond2()
+                display_message("Normal Difficulty (20 eggs)!", 3)  # Display message for 3 seconds
+            elif score == 40:
+                switch_to_pond3()
+                display_message("Hard Difficulty (40 eggs)!", 3)  # Display message for 3 seconds
 
         # Switch difficulties based on the score if not in challenge mode
         if not challenge_mode:
