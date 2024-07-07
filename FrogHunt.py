@@ -262,7 +262,7 @@ frogegg.setposition(70, boundary_height / 2 + 20)
 # Draw message pen for displaying messages
 message_pen = turtle.Turtle()
 message_pen.speed(0)
-message_pen.color('red')
+message_pen.color('lightblue')
 message_pen.up()
 message_pen.hideturtle()
 
@@ -291,11 +291,11 @@ def enable_all_difficulty_keys():
     turtle.onkey(switch_to_pond2, "2")
     turtle.onkey(switch_to_pond3, "3")
 
-# Display a message at the top of the screen for 5 seconds
-def display_message(message, duration=5):
+# Display a message at the top of the screen for 3 seconds
+def display_message(message, duration=3):
     message_pen.clear()
     message_pen.setposition(0, height / 2 - 30)
-    message_pen.write(message, align="center", font=("Comic Sans MS", 16, "bold"))
+    message_pen.write(message, align="right", font=("Comic Sans MS", 16, "bold"))
     S.ontimer(message_pen.clear, duration * 1000)
 
 # Main game loop
@@ -359,14 +359,14 @@ def game_loop():
         if score == 20:
             switch_to_pond2()
 
-        # Enable normal difficulty key when the score reaches 50
-        if score == 50:
+        # Enable normal difficulty key when the score reaches 20
+        if score == 20:
             switch_to_pond2()
             enable_normal_difficulty_key()
-            display_message("Normal Difficulty Unlocked", 5)  # Display message for 5 seconds
+            display_message("Normal Difficulty Unlocked!", 3)  # Display message for 3 seconds
         
-        # Enable all difficulty keys when the score reaches 100
-        if score == 100:
+        # Enable all difficulty keys when the score reaches 40
+        if score == 40:
             switch_to_pond3()
             enable_all_difficulty_keys()
 
