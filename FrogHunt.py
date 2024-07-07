@@ -266,6 +266,10 @@ message_pen.color('lightblue')
 message_pen.up()
 message_pen.hideturtle()
 
+# Initialize difficulty states
+normal_unlocked = False
+hard_unlocked = False
+
 # Helper function to move player
 def move_player():
     angle = player.heading()
@@ -290,6 +294,7 @@ def enable_all_difficulty_keys():
 
 # Function to enable normal difficulty key
 def enable_normal_difficulty_key():
+    turtle.onkey(switch_to_pond1, "1")
     turtle.onkey(switch_to_pond2, "2")
 
 # Function to disable difficulty keys
@@ -302,6 +307,8 @@ def disable_difficulty_keys():
 def game_loop():
     global time0  # Declare time0 as global to modify it within the function
     global score
+    global normal_unlocked
+    global hard_unlocked
 
     move_player()
     
@@ -360,12 +367,14 @@ def game_loop():
             switch_to_pond2()
             enable_normal_difficulty_key()
             display_message("Normal Difficulty Unlocked!", 3)  # Display message for 3 seconds
+            normal_unlocked = True
         
         # Enable all difficulty keys when the score reaches 40
         if score == 40:
             switch_to_pond3()
             enable_all_difficulty_keys()
             display_message("Hard Difficulty Unlocked!", 3)  # Display message for 3 seconds
+            hard_unlocked = True
 
     S.update()
     S.ontimer(game_loop, 20)  # Call game_loop every 20 ms for smooth updates
