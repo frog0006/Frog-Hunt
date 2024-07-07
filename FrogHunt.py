@@ -273,8 +273,13 @@ def disable_difficulty_keys():
     turtle.onkey(None, "2")
     turtle.onkey(None, "3")
 
-# Enable difficulty change keys
-def enable_difficulty_keys():
+# Enable normal difficulty key
+def enable_normal_difficulty_key():
+    turtle.onkey(switch_to_pond1, "1")
+    turtle.onkey(switch_to_pond2, "2")
+
+# Enable all difficulty keys
+def enable_all_difficulty_keys():
     turtle.onkey(switch_to_pond1, "1")
     turtle.onkey(switch_to_pond2, "2")
     turtle.onkey(switch_to_pond3, "3")
@@ -340,10 +345,15 @@ def game_loop():
         if score == 20:
             switch_to_pond2()
 
-        # Enable difficulty keys when the score reaches 50
-        if score == 50:
+        # Enable normal difficulty key when the score reaches 20
+        if score == 20:
+            switch_to_pond2()
+            enable_normal_difficulty_key()
+        
+        # Enable all difficulty keys when the score reaches 40
+        if score == 40:
             switch_to_pond3()
-            enable_difficulty_keys()
+            enable_all_difficulty_keys()
 
     S.update()
     S.ontimer(game_loop, 20)  # Call game_loop every 20 ms for smooth updates
