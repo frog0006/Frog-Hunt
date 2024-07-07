@@ -241,11 +241,6 @@ turtle.onkey(speedup, "Up")
 turtle.onkey(slowdown, "Down")
 turtle.onkey(freeze, "f")
 
-# Set background change controls
-turtle.onkeypress(switch_to_pond1, "1")
-turtle.onkeypress(switch_to_pond2, "2")
-turtle.onkeypress(switch_to_pond3, "3")
-
 # Score
 score = 0
 
@@ -271,6 +266,18 @@ def move_player():
     dy = speed * math.sin(angle_rad)
     player.setx(player.xcor() + dx)
     player.sety(player.ycor() + dy)
+
+# Disable difficulty change keys initially
+def disable_difficulty_keys():
+    turtle.onkey(None, "1")
+    turtle.onkey(None, "2")
+    turtle.onkey(None, "3")
+
+# Enable difficulty change keys
+def enable_difficulty_keys():
+    turtle.onkey(switch_to_pond1, "1")
+    turtle.onkey(switch_to_pond2, "2")
+    turtle.onkey(switch_to_pond3, "3")
 
 # Main game loop
 def game_loop():
@@ -332,11 +339,17 @@ def game_loop():
         # Switch difficulties based on the score
         if score == 20:
             switch_to_pond2()
-        elif score == 50:
+
+        # Enable difficulty keys when the score reaches 50
+        if score == 50:
             switch_to_pond3()
+            enable_difficulty_keys()
 
     S.update()
     S.ontimer(game_loop, 20)  # Call game_loop every 20 ms for smooth updates
+
+# Disable difficulty keys initially
+disable_difficulty_keys()
 
 # Initialize and start the game loop
 change_background('images/pond.gif')  # Set initial background
