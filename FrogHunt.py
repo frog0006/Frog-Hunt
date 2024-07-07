@@ -266,9 +266,18 @@ message_pen.color('lightblue')
 message_pen.up()
 message_pen.hideturtle()
 
+# Timer pen for displaying challenge minigame timer
+timer_pen = turtle.Turtle()
+timer_pen.speed(0)
+timer_pen.color('black')
+timer_pen.up()
+timer_pen.hideturtle()
+
 # Initialize difficulty states
 normal_unlocked = False
 hard_unlocked = False
+challenge_mode = False
+challenge_start_time = 0
 
 # Helper function to move player
 def move_player():
@@ -303,12 +312,35 @@ def disable_difficulty_keys():
     turtle.onkey(None, "2")
     turtle.onkey(None, "3")
 
+# Function to start the challenge minigame
+def start_challenge():
+    global challenge_mode
+    global challenge_start_time
+    global score
+
+    score = 0
+    score_pen.clear()
+    score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
+    
+    challenge_mode = True
+    challenge_start_time = time.time()
+    disable_difficulty_keys()
+
+# Function to update and display the challenge timer
+def update_timer():
+    if challenge_mode:
+        elapsed_time = int(time.time() - challenge_start_time)
+        timer_pen.clear()
+        timer_pen.setposition(width / 2 - 100, height / 2 - 30)  # Top right corner
+        timer_pen.write(f'Time: {elapsed_time}s', align="right", font=("Comic Sans MS", 16, "bold"))
+
 # Main game loop
 def game_loop():
     global time0  # Declare time0 as global to modify it within the function
     global score
     global normal_unlocked
     global hard_unlocked
+    global challenge_mode
 
     move_player()
     
@@ -362,25 +394,41 @@ def game_loop():
         if score % 3 == 0:
             croak_sfx.play()
 
-        # Switch difficulties based on the score
-        if score == 20:
-            switch_to_pond2()
-            enable_normal_difficulty_key()
-            display_message("Normal Difficulty Unlocked!", 3)  # Display message for 3 seconds
-            normal_unlocked = True
-        
-        # Enable all difficulty keys when the score reaches 40
-        if score == 40:
-            switch_to_pond3()
-            enable_all_difficulty_keys()
-            display_message("Hard Difficulty Unlocked!", 3)  # Display message for 3 seconds
-            hard_unlocked = True
+        # Switch difficulties based on the score if not in challenge mode
+        if not challenge_mode:
+            if score == 20:
+                switch_to_pond2()
+                enable_normal_difficulty_key()
+                display_message("Normal Difficulty Unlocked!", 3)  # Display message for 3 seconds
+                normal_unlocked = True
+
+            # Enable all difficulty keys when the score reaches 40
+            if score == 40:
+                switch_to_pond3()
+                enable_all_difficulty_keys()
+                display_message("Hard Difficulty Unlocked!", 3)  # Display message for 3 seconds
+                hard_unlocked = True
+
+    if challenge_mode:
+        update_timer()
+        if score >= 50:
+            challenge_mode = False
+            timer_pen.clear()
+            total_time = int(time.time() - challenge_start_time)
+            display_message(f"Challenge Complete! Time: {total_time}s", 5)
+            if normal_unlocked:
+                enable_normal_difficulty_key()
+            if hard_unlocked:
+                enable_all_difficulty_keys()
 
     S.update()
     S.ontimer(game_loop, 20)  # Call game_loop every 20 ms for smooth updates
 
 # Disable difficulty keys initially
 disable_difficulty_keys()
+
+# Set up key binding for starting challenge minigame
+turtle.onkey(start_challenge, "4")
 
 # Initialize and start the game loop
 change_background('images/pond.gif')  # Set initial background
