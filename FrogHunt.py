@@ -268,35 +268,35 @@ message_pen.hideturtle()
 
 # Helper function to move player
 def move_player():
-    angle_rad = math.radians(player.heading())
-    dx = speed * math.cos(angle_rad)
-    dy = speed * math.sin(angle_rad)
+    angle = player.heading()
+    radian_angle = math.radians(angle)
+    dx = speed * math.cos(radian_angle)
+    dy = speed * math.sin(radian_angle)
     player.setx(player.xcor() + dx)
     player.sety(player.ycor() + dy)
 
-# Disable difficulty change keys initially
-def disable_difficulty_keys():
-    turtle.onkey(None, "1")
-    turtle.onkey(None, "2")
-    turtle.onkey(None, "3")
+# Function to display a message at the top left corner of the screen for a given duration
+def display_message(message, duration=3):
+    message_pen.clear()
+    message_pen.setposition(-width / 2 + 10, height / 2 - 30)  # Top left corner
+    message_pen.write(message, align="left", font=("Comic Sans MS", 16, "bold"))
+    S.ontimer(message_pen.clear, duration * 1000)
 
-# Enable normal difficulty key
-def enable_normal_difficulty_key():
-    turtle.onkey(switch_to_pond1, "1")
-    turtle.onkey(switch_to_pond2, "2")
-
-# Enable all difficulty keys
+# Function to enable all difficulty keys
 def enable_all_difficulty_keys():
     turtle.onkey(switch_to_pond1, "1")
     turtle.onkey(switch_to_pond2, "2")
     turtle.onkey(switch_to_pond3, "3")
 
-# Display a message at the top of the screen for 3 seconds
-def display_message(message, duration=3):
-    message_pen.clear()
-    message_pen.setposition(0, height / 2 - 30)
-    message_pen.write(message, align="right", font=("Comic Sans MS", 16, "bold"))
-    S.ontimer(message_pen.clear, duration * 1000)
+# Function to enable normal difficulty key
+def enable_normal_difficulty_key():
+    turtle.onkey(switch_to_pond2, "2")
+
+# Function to disable difficulty keys
+def disable_difficulty_keys():
+    turtle.onkey(None, "1")
+    turtle.onkey(None, "2")
+    turtle.onkey(None, "3")
 
 # Main game loop
 def game_loop():
@@ -358,10 +358,6 @@ def game_loop():
         # Switch difficulties based on the score
         if score == 20:
             switch_to_pond2()
-
-        # Enable normal difficulty key when the score reaches 20
-        if score == 20:
-            switch_to_pond2()
             enable_normal_difficulty_key()
             display_message("Normal Difficulty Unlocked!", 3)  # Display message for 3 seconds
         
@@ -369,6 +365,7 @@ def game_loop():
         if score == 40:
             switch_to_pond3()
             enable_all_difficulty_keys()
+            display_message("Hard Difficulty Unlocked!", 3)  # Display message for 3 seconds
 
     S.update()
     S.ontimer(game_loop, 20)  # Call game_loop every 20 ms for smooth updates
