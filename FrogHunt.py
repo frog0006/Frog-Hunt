@@ -275,6 +275,7 @@ def move_player():
 # Main game loop
 def game_loop():
     global time0  # Declare time0 as global to modify it within the function
+    global score
 
     move_player()
     
@@ -317,7 +318,6 @@ def game_loop():
         y = random.randint(int(-boundary_height / 2) + 20, int(boundary_height / 2) - 20)
         frog.setposition(x, y)
         crunch_sfx.play()
-        global score
         score += 1
         score_pen.clear()
         score_pen.write(f'Frog Eggs: {score}', align="center", font=("Comic Sans MS", 12))
@@ -328,6 +328,12 @@ def game_loop():
         # Play croak sound effect for every 3 frog eggs the player gets
         if score % 3 == 0:
             croak_sfx.play()
+
+        # Switch difficulties based on the score
+        if score == 20:
+            switch_to_pond2()
+        elif score == 50:
+            switch_to_pond3()
 
     S.update()
     S.ontimer(game_loop, 20)  # Call game_loop every 20 ms for smooth updates
