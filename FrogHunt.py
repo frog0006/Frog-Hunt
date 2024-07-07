@@ -77,12 +77,15 @@ def change_background(bg_image):
 
 def switch_to_pond1():
     change_background('images/pond.gif')
+    display_mode_message('(Easy Mode)')
 
 def switch_to_pond2():
     change_background('images/pond2.gif')
+    display_mode_message('(Normal Mode)')
 
 def switch_to_pond3():
     change_background('images/pond3.gif')
+    display_mode_message('(Hard Mode)')
 
 # Screen setup
 width = 700
@@ -295,6 +298,12 @@ def display_message(message, duration=3):
     message_pen.write(message, align="left", font=("Comic Sans MS", 16, "bold"))
     S.ontimer(message_pen.clear, duration * 1000)
 
+# Function to display mode message at the top left corner of the screen indefinitely
+def display_mode_message(message):
+    message_pen.clear()
+    message_pen.setposition(-width / 2 + 10, height / 2 - 30)  # Top left corner
+    message_pen.write(message, align="left", font=("Comic Sans MS", 16, "bold"))
+
 # Function to enable all difficulty keys
 def enable_all_difficulty_keys():
     turtle.onkey(switch_to_pond1, "1")
@@ -326,6 +335,8 @@ def start_challenge():
     challenge_start_time = time.time()
     disable_difficulty_keys()
     change_background('images/pond.gif')  # Start with easy difficulty
+    display_message("Challenge Started!", 3)
+    S.ontimer(lambda: display_mode_message("(Easy Mode)"), 3000)
 
 # Function to update and display the challenge timer
 def update_timer():
@@ -398,10 +409,10 @@ def game_loop():
         if challenge_mode:
             if score == 20:
                 switch_to_pond2()
-                display_message("Normal Difficulty (20 eggs)!", 3)  # Display message for 3 seconds
+                display_mode_message("(Normal Mode)")
             elif score == 40:
                 switch_to_pond3()
-                display_message("Hard Difficulty (40 eggs)!", 3)  # Display message for 3 seconds
+                display_mode_message("(Hard Mode)")
 
         # Switch difficulties based on the score if not in challenge mode
         if not challenge_mode:
@@ -422,9 +433,8 @@ def game_loop():
         update_timer()
         if score >= 50:
             challenge_mode = False
-            timer_pen.clear()
             total_time = int(time.time() - challenge_start_time)
-            display_message(f"Challenge Complete! Time: {total_time}s", 5)
+            display_mode_message(f"Challenge Complete! Time: {total_time}s")
             if normal_unlocked:
                 enable_normal_difficulty_key()
             if hard_unlocked:
